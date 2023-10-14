@@ -26,7 +26,7 @@ bucket = storage.bucket()
 
 
 @api_view(["POST"])
-def add_decoration(request):
+def add_service(request):
     data = request.data
     if 'description' in data and 'direction' in data and 'fromPrice' in data and 'photos' in data and "location" in data and "mobile" in data and "name" in data and "noofRatings" in data and "queries" in data and "ratings" in data and "totalRating" in data and "type" in data and 'service_name' in data:
         url_list = []
@@ -57,7 +57,7 @@ def add_decoration(request):
 
 
 @api_view(["POST"])
-def edit_decoration(request):
+def edit_service(request):
     data = request.data
     if 'description' in data and 'direction' in data and 'fromPrice' in data and 'photos' in data and "location" in data and "mobile" in data and "name" in data and "noofRatings" in data and "queries" in data and "ratings" in data and "totalRating" in data and "type" in data and "id" in data and 'service_name' in data:
         url_list = []
@@ -91,7 +91,7 @@ def edit_decoration(request):
 
 
 @api_view(["POST"])
-def delete_decoration(request):
+def delete_service(request):
     data = request.data
     if "id" in data and "service_name" in data:
         db = firestore.client()
@@ -102,7 +102,7 @@ def delete_decoration(request):
 
 
 @api_view(["POST"])
-def decoration_list(request):
+def service_list(request):
     data = request.data
     if "service_name" in data:
         fs = firestore.client()
@@ -113,152 +113,6 @@ def decoration_list(request):
             d['id'] = i.id
             users.append(d)
         return Response({"status": "200", "message": "Success", "data": users})
-    else:
-        return Response({"status": "400", "message": "Please Provide all fields"})
-
-
-@api_view(["POST"])
-def add_caterers(request):
-    data = request.data
-    if 'description' in data and 'direction' in data and 'fromPrice' in data and 'photos' in data and "location" in data and "mobile" in data and "name" in data and "noofRatings" in data and "queries" in data and "ratings" in data and "totalRating" in data:
-        url_list = []
-        for i in data['photos']:
-            blob = bucket.blob(i.name)
-            blob.upload_from_file(i.file)
-            blob.make_public()
-            url_list.append(blob.public_url)
-        db = firestore.client()
-        db.collection('services').document("services").collection("services").document("aatest").set({
-            "description": data['description'],
-            "direction": data['direction'],
-            "fromPrice": data['fromPrice'],
-            "photos": url_list,
-            "location": data['location'],
-            "mobile": data['mobile'],
-            "name": data['name'],
-            "noofRatings": data['noofRatings'],
-            "queries": data['queries'],
-            "ratings": data['ratings'],
-            "totalRating": data['totalRating'],
-        })
-        return Response({"status": "200", "message": "data added successfully"})
-    else:
-        return Response({"status": "400", "message": "Please Provide all fields"})
-
-
-@api_view(["POST"])
-def add_ice_creams(request):
-    data = request.data
-    if 'description' in data and 'direction' in data and 'fromPrice' in data and 'photos' in data and "location" in data and "mobile" in data and "name" in data and "noofRatings" in data and "queries" in data and "ratings" in data and "totalRating" in data:
-        url_list = []
-        for i in data['photos']:
-            blob = bucket.blob(i.name)
-            blob.upload_from_file(i.file)
-            blob.make_public()
-            url_list.append(blob.public_url)
-        db = firestore.client()
-        db.collection('services').document("icecreams").collection("icecreams").document("aatest").set({
-            "description": data['description'],
-            "direction": data['direction'],
-            "fromPrice": data['fromPrice'],
-            "photos": url_list,
-            "location": data['location'],
-            "mobile": data['mobile'],
-            "name": data['name'],
-            "noofRatings": data['noofRatings'],
-            "queries": data['queries'],
-            "ratings": data['ratings'],
-            "totalRating": data['totalRating'],
-        })
-        return Response({"status": "200", "message": "data added successfully"})
-    else:
-        return Response({"status": "400", "message": "Please Provide all fields"})
-
-
-@api_view(["POST"])
-def add_makeup(request):
-    data = request.data
-    if 'description' in data and 'direction' in data and 'fromPrice' in data and 'photos' in data and "location" in data and "mobile" in data and "name" in data and "noofRatings" in data and "queries" in data and "ratings" in data and "totalRating" in data:
-        url_list = []
-        for i in data['photos']:
-            blob = bucket.blob(i.name)
-            blob.upload_from_file(i.file)
-            blob.make_public()
-            url_list.append(blob.public_url)
-        db = firestore.client()
-        db.collection('services').document("makeup").collection("makeup").document("aatest").set({
-            "description": data['description'],
-            "direction": data['direction'],
-            "fromPrice": data['fromPrice'],
-            "photos": url_list,
-            "location": data['location'],
-            "mobile": data['mobile'],
-            "name": data['name'],
-            "noofRatings": data['noofRatings'],
-            "queries": data['queries'],
-            "ratings": data['ratings'],
-            "totalRating": data['totalRating'],
-        })
-        return Response({"status": "200", "message": "data added successfully"})
-    else:
-        return Response({"status": "400", "message": "Please Provide all fields"})
-
-
-@api_view(["POST"])
-def add_photography(request):
-    data = request.data
-    if 'description' in data and 'direction' in data and 'fromPrice' in data and 'photos' in data and "location" in data and "mobile" in data and "name" in data and "noofRatings" in data and "queries" in data and "ratings" in data and "totalRating" in data:
-        url_list = []
-        for i in data['photos']:
-            blob = bucket.blob(i.name)
-            blob.upload_from_file(i.file)
-            blob.make_public()
-            url_list.append(blob.public_url)
-        db = firestore.client()
-        db.collection('services').document("photography").collection("photography").document("aatest").set({
-            "description": data['description'],
-            "direction": data['direction'],
-            "fromPrice": data['fromPrice'],
-            "photos": url_list,
-            "location": data['location'],
-            "mobile": data['mobile'],
-            "name": data['name'],
-            "noofRatings": data['noofRatings'],
-            "queries": data['queries'],
-            "ratings": data['ratings'],
-            "totalRating": data['totalRating'],
-        })
-        return Response({"status": "200", "message": "data added successfully"})
-    else:
-        return Response({"status": "400", "message": "Please Provide all fields"})
-
-
-@api_view(["POST"])
-def add_venue(request):
-    data = request.data
-    if 'description' in data and 'direction' in data and 'fromPrice' in data and 'photos' in data and "location" in data and "mobile" in data and "name" in data and "noofRatings" in data and "queries" in data and "ratings" in data and "totalRating" in data and "type" in data:
-        url_list = []
-        for i in data['photos']:
-            blob = bucket.blob(i.name)
-            blob.upload_from_file(i.file)
-            blob.make_public()
-            url_list.append(blob.public_url)
-        db = firestore.client()
-        db.collection('services').document("venues").collection("venues").document("aatest").set({
-            "description": data['description'],
-            "direction": data['direction'],
-            "fromPrice": data['fromPrice'],
-            "photos": url_list,
-            "location": data['location'],
-            "mobile": data['mobile'],
-            "name": data['name'],
-            "noofRatings": data['noofRatings'],
-            "queries": data['queries'],
-            "ratings": data['ratings'],
-            "totalRating": data['totalRating'],
-            "type": data['type']
-        })
-        return Response({"status": "200", "message": "data added successfully"})
     else:
         return Response({"status": "400", "message": "Please Provide all fields"})
 
