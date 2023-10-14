@@ -102,6 +102,17 @@ def delete_service(request):
 
 
 @api_view(["POST"])
+def service_edit_details(request):
+    data = request.data
+    if "id" in data and "service_name" in data:
+        db = firestore.client()
+        details = db.collection('services').document(data['service_name']).collection(data['service_name']).document(data['id']).get()
+        return Response({"status": "200", "message": "data fetched successfully", "data":details.to_dict()})
+    else:
+        return Response({"status": "400", "message": "Please Provide all fields"})
+
+
+@api_view(["POST"])
 def service_list(request):
     data = request.data
     if "service_name" in data:

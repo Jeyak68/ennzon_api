@@ -1,12 +1,13 @@
 from django.urls import path
 from .views import add_service, add_ads, \
-    get_users, add_banner, add_category, edit_category, category_list, delete_category, banner_list, edit_service, delete_service, service_list, add_image
+    get_users, add_banner, add_category, edit_category, category_list, delete_category, banner_list, edit_service, delete_service, service_list, add_image, service_edit_details
 
 urlpatterns = [
     path('add_service', add_service),
     path('edit_service', edit_service),
     path('delete_service', delete_service),
     path('service_list', service_list),
+    path('service_edit_details', service_edit_details),
     path('add_ads', add_ads),
     path('get_users', get_users),
     path('add_banner', add_banner),
