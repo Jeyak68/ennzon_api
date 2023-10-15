@@ -231,6 +231,17 @@ def delete_category(request):
 
 
 @api_view(["POST"])
+def category_edit_details(request):
+    data = request.data
+    if 'id' in data:
+        db = firestore.client()
+        data = db.collection('category').document(data['id']).get()
+        return Response({"status": "200", "message": "data fetched successfully", "data":data.to_dict()})
+    else:
+        return Response({"status": "400", "message": "Please Provide all fields"})
+
+
+@api_view(["POST"])
 def add_banner(request):
     data = request.data
     if 'banner' in data:
